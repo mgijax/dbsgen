@@ -1,7 +1,9 @@
-TAG: dbsgen-assembly-3
+TAG: dbsgen-assembly-3 
 DATE: 12/02/2004
 STAFF: mbw
 CHANGES: updated to use doubles instead of floats
+
+NOTE: dbsgen-assembly-1, and dbsgen-assembly-2 are not valid
 
 TAG: dbsgen-assembly-BP
 DATE: 12/02/2004
