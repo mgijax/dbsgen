@@ -1,7 +1,6 @@
 package org.jax.mgi.shr.dbutils.cg;
 
 import junit.framework.TestCase;
-import org.jax.mgi.dbs.mgd.MGDExt;
 import org.jax.mgi.shr.dbutils.SQLDataManager;
 import org.jax.mgi.shr.dbutils.ResultsNavigator;
 import org.jax.mgi.shr.dbutils.RowReference;
@@ -22,7 +21,7 @@ public class MGDExtTest extends TestCase
         super.setUp();
         sqlMgr = new SQLDataManager();
         doDeletes();
-        doInserts(); 
+        doInserts();
     }
 
     protected void tearDown() throws Exception
@@ -31,55 +30,55 @@ public class MGDExtTest extends TestCase
         doDeletes();
         sqlMgr = null;
     }
-    
+
     public void testInterpreter() throws Exception
     {
-        String sql = "select " + 
-                        MGDExt.acc_accession._accession_key + ", " +
-                        MGDExt.acc_accessionreference._refs_key + " " +
+        String sql = "select " +
+                        "acc_accession._accession_key, " +
+                        "acc_accessionreference._refs_key " +
                      "from " +
-                        MGDExt.acc_accession._name + ", " +
-                        MGDExt.acc_accessionreference._name + " " +
-                     "where " + 
-                        MGDExt.acc_accession._accession_key + " = " +
-                        MGDExt.acc_accessionreference._accession_key + " " +
+                        "acc_accession, " +
+                        "acc_accessionreference " +
+                     "where " +
+                        "acc_accession._accession_key = " +
+                        "acc_accessionreference._accession_key " +
                      "and " +
-                        MGDExt.acc_accession._accession_key + " < 0 " + 
+                        "acc_accession._accession_key < 0 " +
                      "and " +
-                        MGDExt.acc_accession._accession_key + " > -4 " +
-                     "order by " + MGDExt.acc_accession._accession_key;
+                        "acc_accession._accession_key > -4 " +
+                     "order by " + "acc_accession._accession_key";
         ResultsNavigator nav = sqlMgr.executeQuery(sql);
         RowReference row = null;
         String key1 = null;
         String key2 = null;
         nav.next();
         row = nav.getRowReference();
-        key1 = row.getString(MGDExt.acc_accession._accession_key);
-        key2 = row.getString(MGDExt.acc_accessionreference._refs_key);
+        key1 = row.getString("acc_accession._accession_key");
+        key2 = row.getString("acc_accessionreference._refs_key");
         assertEquals("-3", key1);
         assertEquals("3", key2);
         nav.next();
         row = nav.getRowReference();
-        key1 = row.getString(MGDExt.acc_accession._accession_key);
-        key2 = row.getString(MGDExt.acc_accessionreference._refs_key);
+        key1 = row.getString("acc_accession._accession_key");
+        key2 = row.getString("acc_accessionreference._refs_key");
         assertEquals("-2", key1);
         assertEquals("2", key2);
         nav.close();
-        sql = "select * from " + MGDExt.acc_accession._name + 
-              " order by " + MGDExt.acc_accession._accession_key;
+        sql = "select * from " + "acc_accession" +
+              " order by " + "acc_accession._accession_key";
         nav = sqlMgr.executeQuery(sql);
         nav.next();
         row = nav.getRowReference();
-        assertEquals("-3", row.getString(MGDExt.acc_accession._accession_key));
+        assertEquals("-3", row.getString("acc_accession._accession_key"));
         nav.next();
         row = nav.getRowReference();
-        assertEquals("-2", row.getString(MGDExt.acc_accession._accession_key));
-        nav.close();        
+        assertEquals("-2", row.getString("acc_accession._accession_key"));
+        nav.close();
     }
-    
+
     private void doInserts() throws Exception
     {
-        String insert = 
+        String insert =
            "insert into acc_accession values " +
            "(?, ?, ?, ?, 1, 1, 1, 1, 1, 1, 1, curtime(), curtime())";
         BindableStatement bs = sqlMgr.getBindableStatement(insert);
@@ -112,21 +111,21 @@ public class MGDExtTest extends TestCase
         bs.setInt(2, 3);
         bs.executeUpdate();
     }
-    
+
     private void doDeletes() throws Exception
     {
-        sqlMgr.executeUpdate("delete from acc_accession where " + 
+        sqlMgr.executeUpdate("delete from acc_accession where " +
                              "_accession_key = -1");
-        sqlMgr.executeUpdate("delete from acc_accession where " + 
+        sqlMgr.executeUpdate("delete from acc_accession where " +
                              "_accession_key = -2");
-        sqlMgr.executeUpdate("delete from acc_accession where " + 
-                             "_accession_key = -3");  
-        sqlMgr.executeUpdate("delete from acc_accessionreference where " + 
+        sqlMgr.executeUpdate("delete from acc_accession where " +
+                             "_accession_key = -3");
+        sqlMgr.executeUpdate("delete from acc_accessionreference where " +
                              "_accession_key = -1");
-        sqlMgr.executeUpdate("delete from acc_accessionreference where " + 
+        sqlMgr.executeUpdate("delete from acc_accessionreference where " +
                              "_accession_key = -2");
-        sqlMgr.executeUpdate("delete from acc_accessionreference where " + 
-                             "_accession_key = -3");     
+        sqlMgr.executeUpdate("delete from acc_accessionreference where " +
+                             "_accession_key = -3");
     }
 
 }
