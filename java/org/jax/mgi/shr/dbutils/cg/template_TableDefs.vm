@@ -1,0 +1,22 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##className			name of this generated class
+##schema 			name of the schema from org.jax.mgi.dbs.SchemaConstants
+##tableObjs  coll   collection of Table objects
+package ${packageName};
+
+public class $schema
+{
+#if( $tableObjs )
+#foreach( $table in $tableObjs )
+    public class ${table.name.toLowerCase()}
+    {
+       public static final String _name = "${table.name}";
+#foreach( $column in $table.columnDefinitions )
+       public static final String $column.name.toLowerCase().replaceFirst("class", "classVal").replaceFirst("private", "privateVal").replaceFirst("abstract", "abstractVal") = "$column.name";
+#end
+    }
+#end
+#end
+}
+
