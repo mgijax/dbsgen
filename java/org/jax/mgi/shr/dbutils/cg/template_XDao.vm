@@ -362,7 +362,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
             new ${Table.name}DAO((${Table.name}Key)this.key.clone(), 
                                  (${Table.name}State)this.state.clone());
 #else
-            new ${Table.name}DAO(${Table.name}State)this.state.clone());
+            new ${Table.name}DAO((${Table.name}State)this.state.clone());
 #end
       return dao;
     } 
