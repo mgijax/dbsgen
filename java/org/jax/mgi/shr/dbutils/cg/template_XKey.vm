@@ -48,6 +48,18 @@ public class ${Table.name}Key implements Cloneable
         key = Table.getInstance("${Table.name}",sqlMgr).getNextKey();
     }
 
+  /**
+   * Constructor which generates a new key with the next available key value for the
+   * ${Table.name} table as queries through the given SQLDataManager
+   * @assumes Nothing
+   * @effects Nothing
+   */
+   public ${Table.name}Key (SQLDataManager sqlMgr)
+        throws ConfigException, DBException
+    {
+        key = Table.getInstance("${Table.name}",sqlMgr).getNextKey();
+    }
+
 
   /**
    * Constructor which accepts a key value
@@ -73,7 +85,7 @@ public class ${Table.name}Key implements Cloneable
    * Obtain the String representation for this instance.
    * @assumes Nothing
    * @effects Nothing
-   * @returns the String representation
+   * @return the String representation
    */
     public String toString ()
     {
