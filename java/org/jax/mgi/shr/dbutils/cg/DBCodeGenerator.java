@@ -53,13 +53,14 @@ public class DBCodeGenerator
          */
         String baseDir = pkgToDirName(this.basePkg);
         generateFile(new DBTablesCG(this.schema, this.basePkg),
-            baseDir + File.separator + this.schema + ".java");
+                     baseDir + File.separator + this.schema + ".java");
+
 
         /**
          * generate the tables extended definition class
          */
-        generateFile(new DBTablesExtendedCG(this.schema, this.basePkg),
-            baseDir + File.separator + this.schema + "Ext.java");
+        //generateFile(new DBTablesExtendedCG(this.schema, this.basePkg),
+            //baseDir + File.separator + this.schema + "Ext.java");
 
         /**
          * generate the db constants classes if constants list is found
@@ -100,10 +101,19 @@ public class DBCodeGenerator
             }
         }
         /**
-         * generateFile the DAO classes if tables list is found
+         * generate the DAO classes and the xml methods
+         * if generatedTables.txt is found
          */
         String daoDir = pkgToDirName(this.daoPkg);
         String tableList = daoDir + "generatedTables.txt";
+
+        /**
+         * generate the XML processor class
+         */
+        //generateFile(new XMLProcsCG(this.schema, this.basePkg, tableList),
+                     //baseDir + File.separator + "XMLProcs" +
+                     //this.schema + ".java");
+
         if ((new File(tableList).exists()))
         {
             System.out.println();

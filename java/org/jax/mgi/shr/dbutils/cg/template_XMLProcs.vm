@@ -1,0 +1,80 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##schema 			name of the schema from org.jax.mgi.dbs.SchemaConstants
+##tableObjs         collection of Table objects
+package ${packageName};
+
+import org.w3c.dom.*;
+import org.exolab.castor.xml.Marshaller;
+import org.exolab.castor.xml.Unmarshaller;
+
+import org.jax.mgi.shr.exception.MGIException;
+import org.jax.mgi.shr.dbutils.dao.DAO;
+import org.jax.mgi.shr.dbutils.ResultsNavigator;
+import ${packageName}.dao.*;
+
+public class XMLProcs${schema}
+{
+
+    public static DAO createDAOFromNode(Node node) throws MGIException
+    {
+#if( $tableNames )
+        String name = node.getNodeName();
+        if (false) {}
+#foreach( $table in $tableNames )
+        else if (name.equals("${table}State"))
+        {
+            try
+            {
+                ${table}State state =
+                    (${table}State)Unmarshaller.unmarshal(
+                    ${table}State.class,
+                    node);
+                return new ${table}DAO(state);
+            }
+            catch (Exception e)
+            {
+                throw new MGIException("Could not create ${table}State from the following node\n" + node.toString(), e);
+            }
+        }
+#end
+        else
+        {
+            throw new MGIException("Could not create DAO in schema ${schema} with unknown name " + name);
+        }
+#end
+        return null;
+    }
+
+    public static ResultsNavigator lookupNode(Node node) throws MGIException
+    {
+#if( $tableNames )
+        String name = node.getNodeName();
+        if (false) {}
+#foreach( $table in $tableNames )
+        else if (name.equals("${table}State"))
+        {
+            ${table}State state = null;
+            try
+            {
+                state =
+                    (${table}State)Unmarshaller.unmarshal(
+                    ${table}State.class,
+                    node);
+            }
+            catch (Exception e)
+            {
+                throw new MGIException("Could not create ${table}State from the following node\n" + node.toString(), e);
+            }
+            ${table}Lookup lookup = new ${table}Lookup();
+            return lookup.findByState(state);
+        }
+#end
+        else
+        {
+            throw new MGIException("Could not create DAO " + name + " in schema ${schema}");
+        }
+#end
+        return null;
+    }
+ }

@@ -2,36 +2,63 @@ package org.jax.mgi.shr.dbutils.cg;
 
 import org.apache.velocity.VelocityContext;
 
-import org.jax.mgi.shr.dbutils.Table;
-import org.jax.mgi.shr.dbutils.DBTypeConstants;
+import java.util.Vector;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.File;
+import java.io.BufferedReader;
 
-public class XDaoCG
+
+import org.jax.mgi.shr.dbutils.SQLDataManager;
+import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
+import org.jax.mgi.shr.dbutils.ResultsNavigator;
+import org.jax.mgi.shr.dbutils.Table;
+
+
+public class XMLProcsCG
     extends VelocityGenerator
     implements CodeGeneratable {
 
-  public XDaoCG(Table table, String schema, String pkg) {
+  public XMLProcsCG(String schema, String pkgName, String tableList)
+  throws Exception {
     context = new VelocityContext();
-    context.put("Table", table);
     context.put("schema", schema);
-    context.put("packageName", pkg);
-    context.put("char", new Integer(DBTypeConstants.DB_CHAR));
-    context.put("varchar",
-                new Integer(DBTypeConstants.DB_VARCHAR));
-    context.put("text",
-                new Integer(DBTypeConstants.DB_TEXT));
-    context.put("bit",
-                new Integer(DBTypeConstants.DB_BIT));
-    context.put("double",
-                new Integer(DBTypeConstants.DB_DOUBLE));
-    context.put("date",
-                new Integer(DBTypeConstants.DB_DATETIME));
-    context.put("integer",
-                new Integer(DBTypeConstants.DB_INTEGER));
+    context.put("packageName", pkgName);
+    Vector tableNames = new Vector();
+
+    if ((new File(tableList).exists()))
+    {
+        System.out.println();
+        BufferedReader daoIn = null;
+        try
+        {
+            daoIn = new BufferedReader(new FileReader(tableList));
+        }
+        catch (IOException e)
+        {
+            System.out.println("Cannot open file " + tableList);
+            System.exit(1);
+        }
+        String str = null;
+        while ((str = daoIn.readLine()) != null)
+        {
+            System.out.println("processing xml methods for ... " + str);
+            // dont add system tables from Sybase
+            if (!str.startsWith("sys"))
+                tableNames.add(str);
+        }
+        daoIn.close();
+    }
+
+    context.put("tableNames", tableNames);
     setContext(context);
   }
 
   public String generateCode() throws Exception {
-    return super.generateCode("org/jax/mgi/shr/dbutils/cg/template_XDao.vm");
+    return super.generateCode(
+        "org/jax/mgi/shr/dbutils/cg/template_XMLProcs.vm");
   }
 }
 

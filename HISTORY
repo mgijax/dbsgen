@@ -1,5 +1,22 @@
+TAG: dbsgen-3-1-1
+DATE: 12/16/2004
+STAFF: mbw
+CHANGES: merged assembly branch onto the trunk
+
+TAG: dbsgen-assembly-4
+DATE: 12/02/2004
+STAFF: mbw
+CHANGES: removed the new XMLProcs generator from the last commit
+
+TAG: dbsgen-assembly-3 
+DATE: 12/02/2004
+STAFF: mbw
+CHANGES: updated to use doubles instead of floats
+
+NOTE: dbsgen-assembly-1, and dbsgen-assembly-2 are not valid
+
 TAG: dbsgen-assembly-BP
-DATE: 12/04/2004
+DATE: 12/02/2004
 STAFF: mbw
 RELEASE: 
 
