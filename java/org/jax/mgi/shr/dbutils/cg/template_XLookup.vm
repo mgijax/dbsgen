@@ -35,6 +35,13 @@ public class ${Table.name}Lookup {
    */
   private static SQLDataManager sqlMgr = null;
 
+  public ${Table.name}Lookup() {}
+
+  public ${Table.name}Lookup(SQLDataManager sqlMgr)
+  {
+     this.sqlMgr = sqlMgr;
+  }
+
 #if ($Table.hasIncrementalKey())
   /**
    * lookup a ${Table.name} object by key
@@ -100,4 +107,23 @@ public class ${Table.name}Lookup {
     return nav;
   }
 
+  /**
+   * lookup all ${Table.name} objects
+   * @return a ResultsNavigator of query results containing
+   * ${Table.name}DAO objects
+   * @throws DBException thrown if there is an error with the database
+   * @throws ConfigException thrown if there is an error in configuration
+   */
+  public ResultsNavigator findAll()
+  throws ConfigException, DBException
+  {
+    if (sqlMgr == null)
+    {
+        sqlMgr = SQLDataManagerFactory.getShared(SchemaConstants.$schema);
+    }
+    String sql = "SELECT * FROM ${Table.name}";
+    ResultsNavigator nav = sqlMgr.executeQuery(sql);
+    nav.setInterpreter(new ${Table.name}Interpreter());
+    return nav;
+  }
 }
