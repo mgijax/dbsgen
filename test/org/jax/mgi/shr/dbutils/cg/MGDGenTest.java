@@ -18,56 +18,55 @@ import junit.framework.TestCase;
  */
 public class MGDGenTest extends TestCase
 {
-	
-	private MGDGen gen = null;
 
-	/**
-	 * Constructor for MGDGenTest.
-	 * @param arg0
-	 */
-	public MGDGenTest(String arg0)
-	{
-		super(arg0);
-	}
+        private DBCodeGenerator gen = null;
 
-	public void setUp() throws Exception
-	{
-		super.setUp();
-		gen = new MGDGen();
-	}
-	
-	public void teardown() throws Exception
-	{
-		gen = null;
-		super.tearDown();
-	}
-	
-	public void testCreateFile() throws Exception
-	{
-		String sep = File.separator;
-		String filename = "output" + sep + "test" + sep + "data";
-		String contents = "";
-		File file = new File(filename);
-		if (file.exists())
-		   file.delete();
-    gen.createFile(filename, contents); 
-		file = new File(filename);
-		assertTrue(file.exists());
-		file.delete();
-	}
-	
-	public void testPkgToDirName()
-	{
-		String sep = File.separator;
-		String s = gen.pkgToDirName("org.jax.mgi");
-		assertEquals(s, "org" + sep + "jax" + sep + "mgi" + sep);
-	}
+        /**
+         * Constructor for MGDGenTest.
+         * @param arg0
+         */
+        public MGDGenTest(String arg0)
+        {
+                super(arg0);
+        }
+
+        public void setUp() throws Exception
+        {
+                super.setUp();
+                gen = new DBCodeGenerator("MGD", "org.jax.mgi.dbs.mgd");
+        }
+
+        public void teardown() throws Exception
+        {
+                gen = null;
+                super.tearDown();
+        }
+
+        public void testCreateFile() throws Exception
+        {
+                String sep = File.separator;
+                String filename = "output" + sep + "test" + sep + "data";
+                String contents = "";
+                File file = new File(filename);
+                if (file.exists())
+                   file.delete();
+                gen.createFile(filename, contents);
+                file = new File(filename);
+                assertTrue(file.exists());
+                file.delete();
+        }
+
+        public void testPkgToDirName()
+        {
+                String sep = File.separator;
+                String s = gen.pkgToDirName("org.jax.mgi");
+                assertEquals(s, "org" + sep + "jax" + sep + "mgi" + sep);
+        }
 
 
-	public void testRun() throws Exception
-	{
-		MGDGen gen = new MGDGen();
-		gen.run();
-	}
+        public void testRun() throws Exception
+        {
+                gen.run();
+        }
 
 }
