@@ -1,3 +1,8 @@
+TAG: dbsgen-1-0-10
+DATE: 07/28/2004
+STAFF: mbw
+RELEASE: added standard trailers to source code, removed exception throwing from getDeleteSQL in DAO classes
+
 TAG: dbsgen-1-0-9
 DATE: 06/06/2004
 STAFF: mbw
