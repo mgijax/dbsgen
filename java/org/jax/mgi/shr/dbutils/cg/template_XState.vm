@@ -141,7 +141,7 @@ implements RecordStampable_MGDDate, Cloneable
    * Obtain the String representation for this instance.
    * @assumes Nothing
    * @effects Nothing
-   * @returns the String representation
+   * @return the String representation
    */
     public String toString ()
     {
