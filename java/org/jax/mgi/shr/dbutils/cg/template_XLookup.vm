@@ -58,8 +58,10 @@ public class ${Table.name}Lookup {
     nav.setInterpreter(new ${Table.name}Interpreter());
     if (!nav.next()) // no rows found
     {
+      nav.close();
       return null;
     }
+    nav.close();
     return (${Table.name}DAO)nav.getCurrent();
   }
 #end
