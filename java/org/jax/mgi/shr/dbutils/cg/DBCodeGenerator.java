@@ -110,9 +110,9 @@ public class DBCodeGenerator
         /**
          * generate the XML processor class
          */
-        generateFile(new XMLProcsCG(this.schema, this.basePkg, tableList),
-                     baseDir + File.separator + "XMLProcs" +
-                     this.schema + ".java");
+        //generateFile(new XMLProcsCG(this.schema, this.basePkg, tableList),
+                     //baseDir + File.separator + "XMLProcs" +
+                     //this.schema + ".java");
 
         if ((new File(tableList).exists()))
         {
