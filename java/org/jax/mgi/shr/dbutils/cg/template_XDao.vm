@@ -240,7 +240,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
       sql.deleteCharAt(sql.length()-1);
       sql.deleteCharAt(sql.length()-1);
       sql.append(")");
-      return new String(sql);
+      return(new String(sql));
    }
 
 ########################################
@@ -303,7 +303,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
       sql.append("$pkey.name = " + Converter.toSQLString(this.getState().${pkey.GetterCGName}()));
 #end  ##foreach
 #end  ##if
-      return new String(sql);
+      return(new String(sql));
    }
 
 ########################################
@@ -320,7 +320,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
    * @return A string representing the SQL statement.
    * @throws Nothing
    */
-   public String getDeleteSQL() throws DBException
+   public String getDeleteSQL()
    {
       //throw MGIException.getUnsupportedMethodException();
       StringBuffer sql = new StringBuffer("delete from $Table.name where ");
@@ -335,14 +335,14 @@ public class ${Table.name}DAO extends DAO implements Cloneable
       sql.append("$pkey.name = " + Converter.toSQLString(this.getState().${pkey.GetterCGName}()));
 #end  ##foreach
 #end  ##if
-      return new String(sql);
+      return(new String(sql));
    }
 
   /**
    * Obtain the String representation for this instance.
    * @assumes Nothing
    * @effects Nothing
-   * @returns the String representation
+   * @return the String representation
    */
     public String toString ()
     {
