@@ -1,3 +1,10 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##schema            name of the schema from org.jax.mgi.dbs.SchemaConstants
+##Table             the Table class for this DAO object
+##column            collection of shr.dbutils.ColumnDef objects
+##
+## calculate the record format for timestamping
 #if ($Table.hasColumnName("_CreatedBy_Key"))
 #set ($recordFormat = "RecordStamp_MGD")
 #elseif ($Table.hasColumnName("_JobStream_key"))
@@ -61,8 +68,8 @@ implements RecordStampable_MGDDate, Cloneable
 {
 ################################################################################
 ## the following defines code for an instance variable def, a getter and
-## a setter for each column in the table. if this table has an incremental key 
-## then the first table column (being the key) should be skipped here and instead 
+## a setter for each column in the table. if this table has an incremental key
+## then the first table column (being the key) should be skipped here and instead
 ## defined within the key class.
 ################################################################################
 #foreach( $column in $Table.columnDefinitions )
@@ -128,8 +135,8 @@ implements RecordStampable_MGDDate, Cloneable
       $column.CGName = null;
 #end
 #end
-    } 
-    
+    }
+
   /**
    * Obtain the String representation for this instance.
    * @assumes Nothing
@@ -147,18 +154,18 @@ implements RecordStampable_MGDDate, Cloneable
       else
 #if ($column.javaType == "String")
         buf.append("${column.CGName}=" + this.${column.CGName} + ";");
-#else 
+#else
 ## use Converter to convert from String
         buf.append("${column.CGName}=" + Converter.toString(this.${column.CGName}) + ";");
-#end 
+#end
 ##if $column.javaType == "String"
-#end 
+#end
 ##if $velocityCount == 1
-#end 
+#end
 ##foreach
       return new String(buf);
     }
-    
+
     /**
      * override the clone base class method to properly set instance variables
      * @return cloned object
@@ -171,8 +178,8 @@ implements RecordStampable_MGDDate, Cloneable
 #end
 #end
       return state;
-    }    
-    
+    }
+
 }
 
 /**************************************************************************

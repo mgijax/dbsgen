@@ -1,3 +1,9 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##schema            name of the schema from org.jax.mgi.dbs.SchemaConstants
+##Table             the Table class for this DAO object
+##column            collection of shr.dbutils.ColumnDef objects
+##
 package ${packageName};
 
 /**

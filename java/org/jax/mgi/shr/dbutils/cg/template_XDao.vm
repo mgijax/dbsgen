@@ -1,3 +1,8 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##Table             the Table class for this DAO object
+##column            collection of shr.dbutils.ColumnDef objects
+##
 ## calculate the format for timestamping a record
 #if ($Table.hasColumnName("_CreatedBy_Key"))
 #set ($recordFormat = "RecordStamp_MGD")
@@ -333,7 +338,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
 #end  ##if
       return new String(sql);
    }
-   
+
   /**
    * Obtain the String representation for this instance.
    * @assumes Nothing
@@ -343,29 +348,29 @@ public class ${Table.name}DAO extends DAO implements Cloneable
     public String toString ()
     {
 #if ($Table.hasIncrementalKey())
-      return new String("DAO Object: " + this.getClass().getName() + 
-          " | " + this.getKey().toString() + 
+      return new String("DAO Object: " + this.getClass().getName() +
+          " | " + this.getKey().toString() +
           " | " + this.getState().toString());
 #else
-      return new String("DAO Object: " + this.getClass().getName() + 
+      return new String("DAO Object: " + this.getClass().getName() +
           " | "  + this.getState().toString());
 #end
-    } 
-    
+    }
+
     /**
      * override the clone base class method to properly set instance variables
      * @return cloned object
      */
     public Object clone() {
-        ${Table.name}DAO dao = 
+        ${Table.name}DAO dao =
 #if ($Table.hasIncrementalKey())
-            new ${Table.name}DAO((${Table.name}Key)this.key.clone(), 
+            new ${Table.name}DAO((${Table.name}Key)this.key.clone(),
                                  (${Table.name}State)this.state.clone());
 #else
             new ${Table.name}DAO((${Table.name}State)this.state.clone());
 #end
       return dao;
-    } 
+    }
 
 }
 

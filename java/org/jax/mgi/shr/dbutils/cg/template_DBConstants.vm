@@ -2,7 +2,7 @@
 ##packageName  		name of the package for this generated class
 ##className			name of this generated class
 ##tableName         name of the table from which data is extracted
-##constDefs  coll   collection of DBConstantDef objects
+##constDefs         collection of DBConstantDef objects having name/value pairs
 package ${packageName};
 
 /**

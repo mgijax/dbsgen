@@ -2,7 +2,8 @@
 ##packageName  		name of the package for this generated class
 ##className			name of this generated class
 ##schema 			name of the schema from org.jax.mgi.dbs.SchemaConstants
-##tableObjs  coll   collection of Table objects
+##tableObjs         collection of Table objects
+##column            collection of shr.dbutils.ColumnDef objects
 package ${packageName};
 
 public class $schema

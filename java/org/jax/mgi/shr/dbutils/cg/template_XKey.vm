@@ -1,3 +1,9 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##schema            name of the schema from org.jax.mgi.dbs.SchemaConstants
+##Table             the Table class for this DAO object
+##column            collection of shr.dbutils.ColumnDef objects
+##
 package ${packageName};
 
 /**
@@ -62,7 +68,7 @@ public class ${Table.name}Key implements Cloneable
    * @return The key attribute
    */
    public Integer getKey () { return this.key; }
-   
+
   /**
    * Obtain the String representation for this instance.
    * @assumes Nothing
@@ -75,8 +81,8 @@ public class ${Table.name}Key implements Cloneable
       buf.append(this.getClass().getName() + " Values: ");
       buf.append("key=" + Converter.toString(this.key) + ";");
       return new String(buf);
-    } 
-    
+    }
+
     /**
      * override the clone base class method to properly set instance variables
      * @return cloned object
@@ -84,7 +90,7 @@ public class ${Table.name}Key implements Cloneable
     public Object clone() {
       ${Table.name}Key key = new ${Table.name}Key(this.getKey());
       return key;
-    } 
+    }
 }
 
 
