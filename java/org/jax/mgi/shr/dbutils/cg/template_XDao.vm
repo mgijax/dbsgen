@@ -316,7 +316,6 @@ public class ${Table.name}DAO extends DAO implements Cloneable
    * for this object.
    * @assumes Nothing
    * @effects Nothing
-   * @param None
    * @return A string representing the SQL statement.
    * @throws Nothing
    */
