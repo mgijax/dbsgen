@@ -31,11 +31,11 @@ import org.jax.mgi.shr.dbutils.bcp.BCPExceptionFactory;
 import org.jax.mgi.shr.dbutils.dao.DAO;
 import org.jax.mgi.shr.dbutils.dao.RecordStamper;
 import org.jax.mgi.shr.dbutils.dao.RecordStampException;
-import org.jax.mgi.shr.dbutils.cg.SQLGenerator;
 import org.jax.mgi.shr.dbutils.DBException;
 import org.jax.mgi.shr.dbutils.DBExceptionFactory;
 import org.jax.mgi.shr.dbutils.Table;
 import org.jax.mgi.shr.exception.MGIException;
+import org.jax.mgi.shr.types.Converter;
 
 
 /**
@@ -219,7 +219,7 @@ public class ${Table.name}DAO extends DAO
 #foreach( $column in $Table.columnDefinitions )
 #if ($velocityCount == 1 && !$Table.hasIncrementalKey())
       if (this.getState().${column.GetterCGName}() != null)
-        sql.append(SQLGenerator.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
+        sql.append(Converter.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
       else
         sql.append("null, ");
 #elseif ($velocityCount == 1 && $Table.hasIncrementalKey())
@@ -227,7 +227,7 @@ public class ${Table.name}DAO extends DAO
 ## add all other columns subsequent to the first including the timestamp ones
 #elseif ($velocityCount != 1)
       if (this.getState().${column.GetterCGName}() != null)
-        sql.append(SQLGenerator.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
+        sql.append(Converter.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
       else
         sql.append("null, ");
 #end ##if
@@ -278,7 +278,7 @@ public class ${Table.name}DAO extends DAO
 #foreach( $column in $Table.columnDefinitions )
 #if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1) ## include this column in the sql
       if (this.getState().${column.GetterCGName}() != null)
-        sql.append("$column.name = " + SQLGenerator.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
+        sql.append("$column.name = " + Converter.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
       else
         sql.append("$column.name = null, ");
 #end ##if
@@ -290,13 +290,13 @@ public class ${Table.name}DAO extends DAO
       sql.append(" where ");
 #if ($Table.hasIncrementalKey())
 ## assumption : the first column in the table is the incremental key
-      sql.append("$Table.columnDefinitions.get(0).name = " + SQLGenerator.toSQLString(this.getKey().getKey()));
+      sql.append("$Table.columnDefinitions.get(0).name = " + Converter.toSQLString(this.getKey().getKey()));
 #else ## use the primary keys of the table and the values from the State class
 #foreach ($pkey in $Table.getPrimaryKeyDefinitions())
 #if ($velocityCount != 1)
       sql.append(" and ");
 #end
-      sql.append("$pkey.name = " + SQLGenerator.toSQLString(this.getState().${pkey.GetterCGName}()));
+      sql.append("$pkey.name = " + Converter.toSQLString(this.getState().${pkey.GetterCGName}()));
 #end  ##foreach
 #end  ##if
       return new String(sql);
@@ -322,13 +322,13 @@ public class ${Table.name}DAO extends DAO
       StringBuffer sql = new StringBuffer("delete from $Table.name where ");
 #if ($Table.hasIncrementalKey())
 ## assumption : the first column in the table is the incremental key
-      sql.append("$Table.columnDefinitions.get(0).name = " + SQLGenerator.toSQLString(this.getKey().getKey()));
+      sql.append("$Table.columnDefinitions.get(0).name = " + Converter.toSQLString(this.getKey().getKey()));
 #else ## use the primary keys of the table and the values from the State class
 #foreach ($pkey in $Table.getPrimaryKeyDefinitions())
 #if ($velocityCount != 1)
       sql.append(" and ");
 #end
-      sql.append("$pkey.name = " + SQLGenerator.toSQLString(this.getState().${pkey.GetterCGName}()));
+      sql.append("$pkey.name = " + Converter.toSQLString(this.getState().${pkey.GetterCGName}()));
 #end  ##foreach
 #end  ##if
       return new String(sql);

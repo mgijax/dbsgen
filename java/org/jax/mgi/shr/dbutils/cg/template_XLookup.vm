@@ -11,9 +11,9 @@ import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
 import org.jax.mgi.shr.dbutils.DBException;
 import org.jax.mgi.shr.dbutils.ResultsNavigator;
 import org.jax.mgi.shr.dbutils.RowReference;
-import org.jax.mgi.shr.dbutils.cg.SQLGenerator;
 import org.jax.mgi.shr.config.ConfigException;
 import org.jax.mgi.dbs.SchemaConstants;
+import org.jax.mgi.shr.types.Converter;
 
 /**
  * @is a class for looking up ${Table.name} objects by key or state
@@ -78,7 +78,7 @@ public class ${Table.name}Lookup {
 #if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
     if (state.${column.GetterCGName}() != null)
       sql.append("$column.name = " +
-      SQLGenerator.toSQLString(state.${column.GetterCGName}()) + " AND ");
+      Converter.toSQLString(state.${column.GetterCGName}()) + " AND ");
 #end ##if
 #end ##foreach
     // lop off last 'AND'
