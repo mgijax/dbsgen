@@ -1,0 +1,362 @@
+## calculate the format for timestamping a record
+#if ($Table.hasColumnName("_CreatedBy_Key"))
+#set ($recordFormat = "RecordStamp_MGD")
+#elseif ($Table.hasColumnName("_JobStream_key"))
+#set ($recordFormat = "RecordStamp_RADAR")
+#elseif ($Table.hasColumnName("createdBy"))
+#set ($recordFormat = "RecordStamp_MGDOrg")
+#elseif ($Table.hasColumnName("release_date"))
+#set ($recordFormat = "RecordStamp_MGDRelease")
+#elseif ($Table.hasColumnName("creation_date"))
+#set ($recordFormat = "RecordStamp_MGDDate")
+#else
+#set ($recordFormat = "Unknown")
+#end
+###################################################
+## begin code #####################################
+package ${packageName};
+
+
+/**
+ *  This code was produced by code generation and will most likely be
+ *  regenerated in the future. Take caution when editing by hand.
+ */
+
+
+import java.util.Vector;
+
+import org.jax.mgi.shr.config.ConfigException;
+import org.jax.mgi.shr.dbutils.bcp.BCPException;
+import org.jax.mgi.shr.dbutils.bcp.BCPExceptionFactory;
+import org.jax.mgi.shr.dbutils.dao.DAO;
+import org.jax.mgi.shr.dbutils.dao.RecordStamper;
+import org.jax.mgi.shr.dbutils.dao.RecordStampException;
+import org.jax.mgi.shr.dbutils.cg.SQLGenerator;
+import org.jax.mgi.shr.dbutils.DBException;
+import org.jax.mgi.shr.dbutils.DBExceptionFactory;
+import org.jax.mgi.shr.dbutils.Table;
+import org.jax.mgi.shr.exception.MGIException;
+
+
+/**
+ * @is An object that represents a record in the ${Table.name} table.
+ * @has
+ *   <UL>
+ *   <LI> ${Table.name}Key object
+ *   <LI> ${Table.name}State object
+ *   </UL>
+ * @does
+ *   <UL>
+ *   <LI> Provides BCPTranslatable and SQLTranslatable implementations for the
+ *        ${Table.name} table.
+ *   </UL>
+ */
+
+public class ${Table.name}DAO extends DAO
+{
+## if the table has an sequential key the define a key object
+#if ($Table.hasIncrementalKey())
+   private ${Table.name}Key key = null;
+#end
+   private ${Table.name}State state = null;
+
+
+  /**
+   * Constructor which accepts a given ${Table.name}State object and
+   * will generate a new ${Table.name}Key object
+   * @assumes Nothing
+   * @effects Nothing
+   * @param state The ${Table.name}State object
+   */
+   public ${Table.name}DAO (${Table.name}State state)
+#if ($Table.hasIncrementalKey())
+     throws ConfigException, DBException
+#end
+   {
+#if ($Table.hasIncrementalKey())
+      key = new ${Table.name}Key();
+#end
+      this.state = state;
+   }
+
+#if ($Table.hasIncrementalKey())
+  /**
+   * Constructor which accepts a given ${Table.name}State object and
+   * a ${Table.name}Key object
+   * @assumes Nothing
+   * @effects Nothing
+   * @param key The ${Table.name}Key object
+   * @param state The ${Table.name}State object
+   */
+   public ${Table.name}DAO (${Table.name}Key key,
+          ${Table.name}State state)
+   {
+      this.key = key;
+      this.state = state;
+   }
+
+  /**
+   * Get the ${Table.name}Key attribute.
+   * @assumes Nothing
+   * @effects Nothing
+   * @return The ${Table.name}Key attribute
+   */
+   public ${Table.name}Key getKey ()
+   {
+      return this.key;
+   }
+#end
+
+  /**
+   * Get the ${Table.name}State attribute.
+   * @assumes Nothing
+   * @effects Nothing
+   * @return The ${Table.name}State attribute
+   */
+   public ${Table.name}State getState ()
+   {
+     return this.state;
+   }
+
+
+  /**
+   * Get a vector of table names that are supported by this class.
+   * @assumes Nothing
+   * @effects Nothing
+   * @return A vector of table names support by this class.
+   */
+   public Vector getBCPSupportedTables()
+   {
+      Vector v = new Vector();
+      v.add("${Table.name}");
+      return v;
+   }
+
+
+  /**
+   * Get a vector from this object that represents one row of data to be
+   * written to the bcp file.  The order of the attributes in the vector
+   * needs to correspond to the order of the columns in the given table.
+   * @assumes Nothing
+   * @effects Nothing
+   * @param table The name of the database table that the vector of
+   *        attributes is being targeted for
+   * @return A vector for the bcp record to be written
+   * @throws Nothing
+   */
+   public Vector getBCPVector (Table table) throws BCPException
+   {
+#if ($recordFormat != "Unknown")
+      try
+      {
+        RecordStamper.stampForInsert(this.getState());
+      }
+      catch (RecordStampException e)
+      {
+        BCPExceptionFactory ef = new BCPExceptionFactory();
+        BCPException e2 = (BCPException)
+          ef.getException(BCPExceptionFactory.RecordStampErr);
+        e2.bind("${Table.name}");
+        throw e2;
+      }
+#end
+      Vector v = new Vector();
+      if (table.getName().equals("${Table.name}"))
+      {
+#if ($Table.hasIncrementalKey())
+         v.add(key.getKey());
+#end
+## only use the first column if this table does not have an incremental key
+#set ($firstColumn = true)
+#foreach( $column in $Table.columnDefinitions )
+#if ($firstColumn && !$Table.hasIncrementalKey())
+         v.add(state.${column.GetterCGName}());
+#elseif (!$firstColumn)
+         v.add(state.${column.GetterCGName}());
+#end
+#set ($firstColumn = false)
+#end
+      }
+      return v;
+   }
+
+########################################
+##
+##  generate the getInsertSQL method
+##
+########################################
+
+  /**
+   * Build the SQL statements needed to insert a record into the database
+   * for this object.
+   * @assumes Nothing
+   * @effects Nothing
+   * @return A string representing the SQL statement.
+   */
+   public String getInsertSQL() throws DBException
+   {
+#if ($recordFormat != "Unknown")
+      try
+      {
+        RecordStamper.stampForInsert(this.getState());
+      }
+      catch (RecordStampException e)
+      {
+        DBExceptionFactory ef = new DBExceptionFactory();
+        DBException e2 = (DBException)
+          ef.getException(DBExceptionFactory.RecordStampErr);
+        e2.bind("${Table.name}");
+        throw e2;
+      }
+#end
+#####################################################################################
+## For each column in the table append a string representing its portion of the
+## sql insert statement.
+## The first column should only be used if it is not an incremental key type.
+## If it is an incremental key type then it should be defined within the key class.
+#####################################################################################
+      StringBuffer sql = new StringBuffer("insert into $Table.name values (");
+#foreach( $column in $Table.columnDefinitions )
+#if ($velocityCount == 1 && !$Table.hasIncrementalKey())
+      if (this.getState().${column.GetterCGName}() != null)
+        sql.append(SQLGenerator.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
+      else
+        sql.append("null, ");
+#elseif ($velocityCount == 1 && $Table.hasIncrementalKey())
+      sql.append(this.getKey().getKey().toString() + ", ");
+## add all other columns subsequent to the first including the timestamp ones
+#elseif ($velocityCount != 1)
+      if (this.getState().${column.GetterCGName}() != null)
+        sql.append(SQLGenerator.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
+      else
+        sql.append("null, ");
+#end ##if
+#end ##foreach
+      // lop off the last 2 characters and add the end parenthesis
+      sql.deleteCharAt(sql.length()-1);
+      sql.deleteCharAt(sql.length()-1);
+      sql.append(")");
+      return new String(sql);
+   }
+
+########################################
+##
+##  generate the getUpdateSQL method
+##
+########################################
+  /**
+   * Build the SQL statements needed to update a record in the database
+   * for this object.
+   * @assumes Nothing
+   * @effects Nothing
+   * @return A string representing the SQL statement.
+   */
+   public String getUpdateSQL() throws DBException
+   {
+      //throw MGIException.getUnsupportedMethodException();
+#if ($recordFormat != "Unknown")
+      try
+      {
+        RecordStamper.stampForUpdate(this.getState());
+      }
+      catch (RecordStampException e)
+      {
+        DBExceptionFactory ef = new DBExceptionFactory();
+        DBException e2 = (DBException)
+          ef.getException(DBExceptionFactory.RecordStampErr);
+        e2.bind("${Table.name}");
+        throw e2;
+      }
+#end
+######################################################################################
+## For each column in the table append a string representing its portion of the
+## set clause to the sql update statement.
+## The first column should only be used if it is not an incremental key type.
+## If it is an incremental key type then it should be defined within the key class.
+######################################################################################
+      StringBuffer sql = new StringBuffer("update $Table.name set ");
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1) ## include this column in the sql
+      if (this.getState().${column.GetterCGName}() != null)
+        sql.append("$column.name = " + SQLGenerator.toSQLString(this.getState().${column.GetterCGName}()) + ", ");
+      else
+        sql.append("$column.name = null, ");
+#end ##if
+#end ##foreach
+      // lop off the last 2 characters
+      sql.deleteCharAt(sql.length()-1);
+      sql.deleteCharAt(sql.length()-1);
+      // append where clause
+      sql.append(" where ");
+#if ($Table.hasIncrementalKey())
+## assumption : the first column in the table is the incremental key
+      sql.append("$Table.columnDefinitions.get(0).name = " + SQLGenerator.toSQLString(this.getKey().getKey()));
+#else ## use the primary keys of the table and the values from the State class
+#foreach ($pkey in $Table.getPrimaryKeyDefinitions())
+#if ($velocityCount != 1)
+      sql.append(" and ");
+#end
+      sql.append("$pkey.name = " + SQLGenerator.toSQLString(this.getState().${pkey.GetterCGName}()));
+#end  ##foreach
+#end  ##if
+      return new String(sql);
+   }
+
+########################################
+##
+##  generate the getDeleteSQL method
+##
+########################################
+  /**
+   * Build the SQL statements needed to delete records from the database
+   * for this object.
+   * @assumes Nothing
+   * @effects Nothing
+   * @param None
+   * @return A string representing the SQL statement.
+   * @throws Nothing
+   */
+   public String getDeleteSQL() throws DBException
+   {
+      //throw MGIException.getUnsupportedMethodException();
+      StringBuffer sql = new StringBuffer("delete from $Table.name where ");
+#if ($Table.hasIncrementalKey())
+## assumption : the first column in the table is the incremental key
+      sql.append("$Table.columnDefinitions.get(0).name = " + SQLGenerator.toSQLString(this.getKey().getKey()));
+#else ## use the primary keys of the table and the values from the State class
+#foreach ($pkey in $Table.getPrimaryKeyDefinitions())
+#if ($velocityCount != 1)
+      sql.append(" and ");
+#end
+      sql.append("$pkey.name = " + SQLGenerator.toSQLString(this.getState().${pkey.GetterCGName}()));
+#end  ##foreach
+#end  ##if
+      return new String(sql);
+   }
+
+}
+
+
+
+/**************************************************************************
+*
+* Warranty Disclaimer and Copyright Notice
+*
+*  THE JACKSON LABORATORY MAKES NO REPRESENTATION ABOUT THE SUITABILITY OR
+*  ACCURACY OF THIS SOFTWARE OR DATA FOR ANY PURPOSE, AND MAKES NO WARRANTIES,
+*  EITHER EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR A
+*  PARTICULAR PURPOSE OR THAT THE USE OF THIS SOFTWARE OR DATA WILL NOT
+*  INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS, OR OTHER RIGHTS.
+*  THE SOFTWARE AND DATA ARE PROVIDED "AS IS".
+*
+*  This software and data are provided to enhance knowledge and encourage
+*  progress in the scientific community and are to be used only for research
+*  and educational purposes.  Any reproduction or use for commercial purpose
+*  is prohibited without the prior express written permission of The Jackson
+*  Laboratory.
+*
+* Copyright \251 1996, 1999, 2002, 2003 by The Jackson Laboratory
+*
+* All Rights Reserved
+*
+**************************************************************************/

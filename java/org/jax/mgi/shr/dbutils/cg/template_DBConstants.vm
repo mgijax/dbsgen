@@ -1,0 +1,25 @@
+package ${packageName};
+
+public class $schema
+{
+#if( $tableObjs )
+  #foreach( $table in $tableObjs )
+    public class ${table.name.toLowerCase()}
+    {
+       public static final String _name = "${table.name}";
+  #foreach( $column in $table.ColumnsIterator )
+       public static final String $column.name.toLowerCase() = "$column.name";
+  #end
+    }
+  #end
+#end
+    public class translationTypes
+    {
+#if( $transTypes )
+  #foreach( $def in $transTypes )
+       public static final int $def.name = ${def.key};
+  #end
+#end
+    }
+}
+

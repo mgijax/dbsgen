@@ -1,0 +1,95 @@
+package ${packageName};
+
+/**
+ *  This code was produced by code generation and will most likely be
+ *  regenerated in the future. Take caution when editing by hand.
+ */
+
+
+import org.jax.mgi.shr.dbutils.SQLDataManager;
+import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
+import org.jax.mgi.shr.dbutils.DBException;
+import org.jax.mgi.shr.dbutils.ResultsNavigator;
+import org.jax.mgi.shr.dbutils.RowReference;
+import org.jax.mgi.shr.dbutils.cg.SQLGenerator;
+import org.jax.mgi.shr.config.ConfigException;
+import org.jax.mgi.dbs.SchemaConstants;
+
+/**
+ * @is a class for looking up ${Table.name} objects by key or state
+ * @has a SQLDataManager for performing database queries
+ * @does executes a database query and returns the results
+ * @company The Jackson Laboratory
+ *
+ */
+
+public class ${Table.name}Lookup {
+
+  /**
+   * SQL DataManager which which performs queries on a shared connection
+   */
+  private static SQLDataManager sqlMgr = null;
+
+#if ($Table.hasIncrementalKey())
+  /**
+   * lookup a ${Table.name} object by key
+   * @param key the key to search on
+   * @return the ${Table.name} object found from lookup or null if not found
+   * @throws DBException thrown if there is an error with the database
+   * @throws ConfigException thrown if there is an error in the configuration
+   */
+  public ${Table.name}DAO findBySeqKey(Integer key)
+  throws DBException, ConfigException
+  {
+    if (sqlMgr == null)
+    {
+      sqlMgr = SQLDataManagerFactory.getShared(SchemaConstants.$schema);
+    }
+    StringBuffer sql = new StringBuffer("SELECT * FROM ${Table.name} WHERE ");
+## assumption : the first column in the table is the incremental key
+    sql.append("$Table.columnDefinitions.get(0).name = " + key);
+    ResultsNavigator nav = sqlMgr.executeQuery(new String(sql));
+    nav.setInterpreter(new ${Table.name}Interpreter());
+    if (!nav.next()) // no rows found
+    {
+      return null;
+    }
+    return (${Table.name}DAO)nav.getCurrent();
+  }
+#end
+
+  /**
+   * lookup ${Table.name} objects by state
+   * @param state the state to search on
+   * @return a ResultsNavigator of query results containing
+   * ${Table.name}DAO objects
+   * @throws DBException thrown if there is an error with the database
+   * @throws ConfigException thrown if there is an error in configuration
+   */
+  public ResultsNavigator findByState(${Table.name}State state)
+  throws ConfigException, DBException
+  {
+    if (sqlMgr == null)
+    {
+      sqlMgr = SQLDataManagerFactory.getShared(SchemaConstants.$schema);
+    }
+    StringBuffer sql = new StringBuffer("SELECT * FROM ${Table.name} WHERE ");
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
+    if (state.${column.GetterCGName}() != null)
+      sql.append("$column.name = " +
+      SQLGenerator.toSQLString(state.${column.GetterCGName}()) + " AND ");
+#end ##if
+#end ##foreach
+    // lop off last 'AND'
+    sql.deleteCharAt(sql.length() - 1);
+    sql.deleteCharAt(sql.length() - 1);
+    sql.deleteCharAt(sql.length() - 1);
+    sql.deleteCharAt(sql.length() - 1);
+    String query = new String(sql);
+    ResultsNavigator nav = sqlMgr.executeQuery(query);
+    nav.setInterpreter(new ${Table.name}Interpreter());
+    return nav;
+  }
+
+}

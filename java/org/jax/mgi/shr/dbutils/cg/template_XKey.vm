@@ -1,0 +1,88 @@
+package ${packageName};
+
+/**
+ *  This code was produced by code generation and will most likely be
+ *  regenerated in the future. Take caution when editing by hand.
+ */
+
+import org.jax.mgi.shr.config.ConfigException;
+import org.jax.mgi.shr.dbutils.DBException;
+import org.jax.mgi.shr.dbutils.SQLDataManager;
+import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
+import org.jax.mgi.shr.dbutils.Table;
+import org.jax.mgi.dbs.SchemaConstants;
+
+/**
+ * @is the key for a ${Table.name}DAO.
+ * @has
+ *   <UL>
+ *   <LI> The primary key
+ *   </UL>
+ * @does
+ *   <UL>
+ *   <LI> Provides a get method for the key.
+ *   </UL>
+ */
+
+public class ${Table.name}Key
+{
+   private Integer key;
+
+  /**
+   * Constructor which generates a new key with the next available key value for the
+   * ${Table.name} table
+   * @assumes Nothing
+   * @effects Nothing
+   */
+   public ${Table.name}Key ()
+        throws ConfigException, DBException
+    {
+        SQLDataManager sqlMgr = SQLDataManagerFactory.getShared(SchemaConstants.$schema);
+        key = Table.getInstance("${Table.name}",sqlMgr).getNextKey();
+    }
+
+
+  /**
+   * Constructor which accepts a key value
+   * @assumes Nothing
+   * @effects Nothing
+   * @param key value of the primary key
+   */
+   public ${Table.name}Key (Integer key)
+   {
+      this.key = key;
+   }
+
+
+  /**
+   * Get the key attribute from this object.
+   * @assumes Nothing
+   * @effects Nothing
+   * @return The key attribute
+   */
+   public Integer getKey () { return this.key; }
+}
+
+
+/**************************************************************************
+*
+* Warranty Disclaimer and Copyright Notice
+*
+*  THE JACKSON LABORATORY MAKES NO REPRESENTATION ABOUT THE SUITABILITY OR
+*  ACCURACY OF THIS SOFTWARE OR DATA FOR ANY PURPOSE, AND MAKES NO WARRANTIES,
+*  EITHER EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR A
+*  PARTICULAR PURPOSE OR THAT THE USE OF THIS SOFTWARE OR DATA WILL NOT
+*  INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS, OR OTHER RIGHTS.
+*  THE SOFTWARE AND DATA ARE PROVIDED "AS IS".
+*
+*  This software and data are provided to enhance knowledge and encourage
+*  progress in the scientific community and are to be used only for research
+*  and educational purposes.  Any reproduction or use for commercial purpose
+*  is prohibited without the prior express written permission of The Jackson
+*  Laboratory.
+*
+* Copyright \251 1996, 1999, 2002, 2003 by The Jackson Laboratory
+*
+* All Rights Reserved
+*
+**************************************************************************/

@@ -1,0 +1,82 @@
+package ${packageName};
+
+/**
+ *  This code was produced by code generation and will most likely be
+ *  regenerated in the future. Take caution when editing by hand.
+ */
+
+import org.jax.mgi.shr.dbutils.DBException;
+import org.jax.mgi.shr.dbutils.RowDataInterpreter;
+import org.jax.mgi.shr.dbutils.RowReference;
+
+/**
+ * @is An object that knows how create a $Table.name object from a row
+ *     of data from the $Table.name table.
+ * @has Nothing
+ * @does
+ *   <UL>
+ *   <LI> Provides a method to interpret a row of data.
+ *   </UL>
+ * @company The Jackson Laboratory
+ */
+
+public class ${Table.name}Interpreter implements RowDataInterpreter
+{
+    /**
+    * Interprets a row of data from the $Table.name table to create a
+    * $Table.name object.
+    * @assumes Nothing
+    * @effects Nothing
+    * @param row A row of data.
+    * @return A $Table.name object.
+    * @throws DBException thrown if there is an error with the database
+    */
+    public Object interpret (RowReference row) throws DBException
+    {
+#foreach( $column in $Table.columnDefinitions )
+## if the table has an sequential key column
+## then define a key object using the first column
+#if ($velocityCount == 1 && $Table.hasIncrementalKey())
+      ${Table.name}Key key = new ${Table.name}Key(row.getInt("$column.name"));
+
+      ${Table.name}State state = new ${Table.name}State();
+#elseif ($velocityCount == 1 && !$Table.hasIncrementalKey())
+      ${Table.name}State state = new ${Table.name}State();
+
+#if (${column.javaType} == "Integer")
+      state.${column.SetterCGName}(row.getInt("$column.name"));
+#elseif (${column.javaType} == "Float")
+      state.${column.SetterCGName}(row.getFloat("$column.name"));
+#elseif (${column.javaType} == "Boolean")
+      state.${column.SetterCGName}(row.getBoolean("$column.name"));
+#elseif (${column.javaType} == "String")
+      state.${column.SetterCGName}(row.getString("$column.name"));
+#elseif (${column.javaType} == "Timestamp")
+      state.${column.SetterCGName}(row.getTimestamp("$column.name"));
+#end ##if javaTypes
+#elseif ($velocityCount != 1)
+#if (${column.javaType} == "Integer")
+      state.${column.SetterCGName}(row.getInt("$column.name"));
+#elseif (${column.javaType} == "Float")
+      state.${column.SetterCGName}(row.getFloat("$column.name"));
+#elseif (${column.javaType} == "Boolean")
+      state.${column.SetterCGName}(row.getBoolean("$column.name"));
+#elseif (${column.javaType} == "String")
+      state.${column.SetterCGName}(row.getString("$column.name"));
+#elseif (${column.javaType} == "Timestamp")
+      state.${column.SetterCGName}(row.getTimestamp("$column.name"));
+#end ##if javaTypes
+#end ##if velocityCount != 1
+#end ##foreach column
+
+#if ($Table.hasIncrementalKey())
+      ${Table.name}DAO dao =
+            new ${Table.name}DAO(key, state);
+#else
+      ${Table.name}DAO dao =
+            new ${Table.name}DAO(state);
+#end
+      return dao;
+    }
+}
+

@@ -1,0 +1,12 @@
+  <target name="install.templates" description="Puts template files in classes directory"
+          depends="compile">
+    <copy todir="${classes.dir}/org/jax/mgi/shr/dbutils/cg">
+      <fileset dir="${src.dir}/org/jax/mgi/shr/dbutils/cg">
+         <include name="**/*.vm"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="buildall" description="Runs the targets 'all' and 'install.templates'"
+          depends="all, install.templates">
+  </target>

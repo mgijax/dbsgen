@@ -1,0 +1,135 @@
+#if ($Table.hasColumnName("_CreatedBy_Key"))
+#set ($recordFormat = "RecordStamp_MGD")
+#elseif ($Table.hasColumnName("_JobStream_key"))
+#set ($recordFormat = "RecordStamp_RADAR")
+#elseif ($Table.hasColumnName("createdBy"))
+#set ($recordFormat = "RecordStamp_MGDOrg")
+#elseif ($Table.hasColumnName("release_date"))
+#set ($recordFormat = "RecordStamp_MGDRelease")
+#elseif ($Table.hasColumnName("creation_date"))
+#set ($recordFormat = "RecordStamp_MGDDate")
+#else
+#set ($recordFormat = "Unknown")
+#end
+package ${packageName};
+
+/**
+ *  This code was produced by code generation and will most likely be
+ *  regenerated in the future. Take caution when editing by hand.
+ */
+
+import java.sql.Timestamp;
+#if ($recordFormat == "RecordStamp_MGD")
+import org.jax.mgi.shr.dbutils.dao.RecordStampable_MGD;
+#elseif ($recordFormat == "RecordStamp_RADAR")
+import org.jax.mgi.shr.dbutils.dao.RecordStampable_RADAR;
+#elseif ($recordFormat == "RecordStamp_MGDOrg")
+import org.jax.mgi.shr.dbutils.dao.RecordStampable_MGDOrg;
+#elseif ($recordFormat == "RecordStamp_MGDRelease")
+import org.jax.mgi.shr.dbutils.dao.RecordStampable_MGDRelease;
+#elseif ($recordFormat == "RecordStamp_MGDDate")
+import org.jax.mgi.shr.dbutils.dao.RecordStampable_MGDDate;
+#end
+
+/**
+ * @is An object with attributes needed to create a new $Table.name record
+ * @has
+ *   <UL>
+ *   <LI> $Table.name attributes
+ *   </UL>
+ * @does
+ *   <UL>
+ *   <LI> Provides get/set methods for its attribute(s).
+ *   <LI> Provides a method to clear its attribute(s).
+ *   </UL>
+ */
+
+public class ${Table.name}State
+#if ($recordFormat == "RecordStamp_MGD")
+implements RecordStampable_MGD
+#elseif ($recordFormat == "RecordStamp_RADAR")
+implements RecordStampable_RADAR
+#elseif ($recordFormat == "RecordStamp_MGDOrg")
+implements RecordStampable_MGDOrg
+#elseif ($recordFormat == "RecordStamp_MGDRelease")
+implements RecordStampable_MGDRelease
+#elseif ($recordFormat == "RecordStamp_MGDDate")
+implements RecordStampable_MGDDate
+#end
+{
+################################################################################
+## the following defines code for an instance variable, a getter and
+## a setter for each column in the table. if this table has an incremental key 
+## then the first table column (being the key) should be skipped here and instead 
+## defined within the key class.
+################################################################################
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount > 1)
+    private $column.javaType $column.CGName = null;
+#end
+#end
+
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
+  /**
+   * Get the $column.CGName attribute from this object.
+   * @return The $column.CGName attribute
+   */
+   public $column.javaType ${column.GetterCGName}()
+   {
+     return this.$column.CGName;
+   }
+#end
+#end
+
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
+  /**
+   * Set the $column.CGName attribute of this object to the given value.
+   * @param $column.CGName value to set the attribute to
+   */
+   public void ${column.SetterCGName} ($column.javaType $column.CGName)
+   {
+     this.$column.CGName = ${column.CGName};
+   }
+#end
+#end
+
+  /**
+   * Clear the attributes of this object.
+   * @assumes Nothing
+   * @effects the instance variables will all be set to null
+   */
+    public void clear ()
+    {
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
+      $column.CGName = null;
+#end
+#end
+    }   
+    
+}
+
+/**************************************************************************
+*
+* Warranty Disclaimer and Copyright Notice
+*
+*  THE JACKSON LABORATORY MAKES NO REPRESENTATION ABOUT THE SUITABILITY OR
+*  ACCURACY OF THIS SOFTWARE OR DATA FOR ANY PURPOSE, AND MAKES NO WARRANTIES,
+*  EITHER EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR A
+*  PARTICULAR PURPOSE OR THAT THE USE OF THIS SOFTWARE OR DATA WILL NOT
+*  INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS, OR OTHER RIGHTS.
+*  THE SOFTWARE AND DATA ARE PROVIDED "AS IS".
+*
+*  This software and data are provided to enhance knowledge and encourage
+*  progress in the scientific community and are to be used only for research
+*  and educational purposes.  Any reproduction or use for commercial purpose
+*  is prohibited without the prior express written permission of The Jackson
+*  Laboratory.
+*
+* Copyright \251 1996, 1999, 2002, 2003 by The Jackson Laboratory
+*
+* All Rights Reserved
+*
+**************************************************************************/
