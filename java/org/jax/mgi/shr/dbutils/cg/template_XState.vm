@@ -19,6 +19,8 @@ package ${packageName};
  */
 
 import java.sql.Timestamp;
+import org.jax.mgi.shr.types.Converter;
+import org.jax.mgi.shr.types.TypesException;
 #if ($recordFormat == "RecordStamp_MGD")
 import org.jax.mgi.shr.dbutils.dao.RecordStampable_MGD;
 #elseif ($recordFormat == "RecordStamp_RADAR")
@@ -46,19 +48,19 @@ import org.jax.mgi.shr.dbutils.dao.RecordStampable_MGDDate;
 
 public class ${Table.name}State
 #if ($recordFormat == "RecordStamp_MGD")
-implements RecordStampable_MGD
+implements RecordStampable_MGD, Cloneable
 #elseif ($recordFormat == "RecordStamp_RADAR")
-implements RecordStampable_RADAR
+implements RecordStampable_RADAR, Cloneable
 #elseif ($recordFormat == "RecordStamp_MGDOrg")
-implements RecordStampable_MGDOrg
+implements RecordStampable_MGDOrg, Cloneable
 #elseif ($recordFormat == "RecordStamp_MGDRelease")
-implements RecordStampable_MGDRelease
+implements RecordStampable_MGDRelease, Cloneable
 #elseif ($recordFormat == "RecordStamp_MGDDate")
-implements RecordStampable_MGDDate
+implements RecordStampable_MGDDate, Cloneable
 #end
 {
 ################################################################################
-## the following defines code for an instance variable, a getter and
+## the following defines code for an instance variable def, a getter and
 ## a setter for each column in the table. if this table has an incremental key 
 ## then the first table column (being the key) should be skipped here and instead 
 ## defined within the key class.
@@ -68,6 +70,25 @@ implements RecordStampable_MGDDate
     private $column.javaType $column.CGName = null;
 #end
 #end
+
+  public ${Table.name}State() {}
+
+  public ${Table.name}State(String s)
+  throws TypesException
+  {
+     String[] val = s.split("\\^\\^");
+#set ($index = 0)
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount > 1)
+#if ($column.javaType == "String")
+    $column.CGName = val[${index}];
+#else ## use Converter to convert from String
+    $column.CGName = Converter.to${column.javaType}(val[${index}]);
+#end ##if $column.javaType == "String"
+#set ($index = $index + 1)
+#end ##if $velocityCount > 1
+#end ##foreach
+  }
 
 #foreach( $column in $Table.columnDefinitions )
 #if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
@@ -107,7 +128,50 @@ implements RecordStampable_MGDDate
       $column.CGName = null;
 #end
 #end
-    }   
+    } 
+    
+  /**
+   * Obtain the String representation for this instance.
+   * @assumes Nothing
+   * @effects Nothing
+   * @returns the String representation
+   */
+    public String toString ()
+    {
+      StringBuffer buf = new StringBuffer("State Object: ");
+      buf.append(this.getClass().getName() + " Values: ");
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
+      if (this.${column.CGName} == null)
+        buf.append("${column.CGName}=null;");
+      else
+#if ($column.javaType == "String")
+        buf.append("${column.CGName}=" + this.${column.CGName} + ";");
+#else 
+## use Converter to convert from String
+        buf.append("${column.CGName}=" + Converter.toString(this.${column.CGName}) + ";");
+#end 
+##if $column.javaType == "String"
+#end 
+##if $velocityCount == 1
+#end 
+##foreach
+      return new String(buf);
+    }
+    
+    /**
+     * override the clone base class method to properly set instance variables
+     * @return cloned object
+     */
+    public Object clone() {
+      ${Table.name}State state = new ${Table.name}State();
+#foreach( $column in $Table.columnDefinitions )
+#if (($velocityCount == 1 && !$Table.hasIncrementalKey()) || $velocityCount != 1)
+      state.${column.SetterCGName}(this.${column.GetterCGName}());
+#end
+#end
+      return state;
+    }    
     
 }
 

@@ -10,6 +10,7 @@ import org.jax.mgi.shr.dbutils.DBException;
 import org.jax.mgi.shr.dbutils.SQLDataManager;
 import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
 import org.jax.mgi.shr.dbutils.Table;
+import org.jax.mgi.shr.types.Converter;
 import org.jax.mgi.dbs.SchemaConstants;
 
 /**
@@ -24,7 +25,7 @@ import org.jax.mgi.dbs.SchemaConstants;
  *   </UL>
  */
 
-public class ${Table.name}Key
+public class ${Table.name}Key implements Cloneable
 {
    private Integer key;
 
@@ -61,6 +62,29 @@ public class ${Table.name}Key
    * @return The key attribute
    */
    public Integer getKey () { return this.key; }
+   
+  /**
+   * Obtain the String representation for this instance.
+   * @assumes Nothing
+   * @effects Nothing
+   * @returns the String representation
+   */
+    public String toString ()
+    {
+      StringBuffer buf = new StringBuffer("Key Object: ");
+      buf.append(this.getClass().getName() + " Values: ");
+      buf.append("key=" + Converter.toString(this.key) + ";");
+      return new String(buf);
+    } 
+    
+    /**
+     * override the clone base class method to properly set instance variables
+     * @return cloned object
+     */
+    public Object clone() {
+      ${Table.name}Key key = new ${Table.name}Key(this.getKey());
+      return key;
+    } 
 }
 
 

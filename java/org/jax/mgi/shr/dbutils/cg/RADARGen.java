@@ -1,14 +1,11 @@
 package org.jax.mgi.shr.dbutils.cg;
 
-public class RADARGen
-    extends DBCodeGen {
+public class RADARGen {
 
-  public RADARGen() {
-    super("RADAR", "org.jax.mgi.dbs.rdr.dao");
-  }
+  public RADARGen() {}
 
   public static void main(String[] args) throws Exception {
-    RADARGen gen = new RADARGen();
+    DBCodeGenerator gen = new DBCodeGenerator("RADAR", "org.jax.mgi.dbs.rdr");
     gen.run();
   }
 }

@@ -48,7 +48,7 @@ public class VelocityGenerator
 			 this.getClass().getClassLoader().getResource(resource);
 		if (url == null)
 		{
-			System.out.println("Cannot find template file " + resource);
+			logger.logError("Cannot find template file " + resource);
 			return("");
 		}
 		File file = new File(new URI(url.toString()));

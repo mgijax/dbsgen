@@ -34,8 +34,8 @@ import org.jax.mgi.shr.dbutils.dao.RecordStampException;
 import org.jax.mgi.shr.dbutils.DBException;
 import org.jax.mgi.shr.dbutils.DBExceptionFactory;
 import org.jax.mgi.shr.dbutils.Table;
-import org.jax.mgi.shr.exception.MGIException;
 import org.jax.mgi.shr.types.Converter;
+import org.jax.mgi.shr.exception.MGIException;
 
 
 /**
@@ -52,7 +52,7 @@ import org.jax.mgi.shr.types.Converter;
  *   </UL>
  */
 
-public class ${Table.name}DAO extends DAO
+public class ${Table.name}DAO extends DAO implements Cloneable
 {
 ## if the table has an sequential key the define a key object
 #if ($Table.hasIncrementalKey())
@@ -333,6 +333,39 @@ public class ${Table.name}DAO extends DAO
 #end  ##if
       return new String(sql);
    }
+   
+  /**
+   * Obtain the String representation for this instance.
+   * @assumes Nothing
+   * @effects Nothing
+   * @returns the String representation
+   */
+    public String toString ()
+    {
+#if ($Table.hasIncrementalKey())
+      return new String("DAO Object: " + this.getClass().getName() + 
+          " | " + this.getKey().toString() + 
+          " | " + this.getState().toString());
+#else
+      return new String("DAO Object: " + this.getClass().getName() + 
+          " | "  + this.getState().toString());
+#end
+    } 
+    
+    /**
+     * override the clone base class method to properly set instance variables
+     * @return cloned object
+     */
+    public Object clone() {
+        ${Table.name}DAO dao = 
+#if ($Table.hasIncrementalKey())
+            new ${Table.name}DAO((${Table.name}Key)this.key.clone(), 
+                                 (${Table.name}State)this.state.clone());
+#else
+            new ${Table.name}DAO(${Table.name}State)this.state.clone());
+#end
+      return dao;
+    } 
 
 }
 

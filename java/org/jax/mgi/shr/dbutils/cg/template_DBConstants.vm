@@ -1,25 +1,26 @@
+##the following variables are used in this template
+##packageName  		name of the package for this generated class
+##className			name of this generated class
+##tableName         name of the table from which data is extracted
+##constDefs  coll   collection of DBConstantDef objects
 package ${packageName};
 
-public class $schema
-{
-#if( $tableObjs )
-  #foreach( $table in $tableObjs )
-    public class ${table.name.toLowerCase()}
-    {
-       public static final String _name = "${table.name}";
-  #foreach( $column in $table.ColumnsIterator )
-       public static final String $column.name.toLowerCase() = "$column.name";
-  #end
-    }
-  #end
-#end
-    public class translationTypes
-    {
-#if( $transTypes )
-  #foreach( $def in $transTypes )
-       public static final int $def.name = ${def.key};
-  #end
-#end
-    }
-}
+/**
+ *  This code was produced by code generation and will most likely be
+ *  regenerated in the future. Take caution when editing by hand.
+ */
 
+/**
+ * @is An object that contains constant definitions extracted from
+ * the table ${tableName}.
+ * @has constant definitions
+ * @does no methods
+ * @company The Jackson Laboratory
+ */
+
+public class ${className}
+{
+#foreach( $def in $constDefs )
+    public static final int $def.name.toUpperCase() = ${def.keyValue};
+#end
+}
