@@ -40,7 +40,6 @@ import org.jax.mgi.shr.dbutils.DBException;
 import org.jax.mgi.shr.dbutils.DBExceptionFactory;
 import org.jax.mgi.shr.dbutils.Table;
 import org.jax.mgi.shr.types.Converter;
-import org.jax.mgi.shr.exception.MGIException;
 
 
 /**
