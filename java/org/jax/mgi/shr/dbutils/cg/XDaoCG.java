@@ -21,8 +21,8 @@ public class XDaoCG
                 new Integer(DBTypeConstants.DB_TEXT));
     context.put("bit",
                 new Integer(DBTypeConstants.DB_BIT));
-    context.put("float",
-                new Integer(DBTypeConstants.DB_FLOAT));
+    context.put("double",
+                new Integer(DBTypeConstants.DB_DOUBLE));
     context.put("date",
                 new Integer(DBTypeConstants.DB_DATETIME));
     context.put("integer",
