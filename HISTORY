@@ -1,9 +1,12 @@
+TAG: dbsgen-1-0-5
 TAG: dbsgen-1-0-4
 DATE: 02/02/2004
 STAFF: lec
 RELEASE: production
 CHANGES: renamed to "dbsgen" and moved CVS repository
 	to /mgi/applications
+
+	- changed build.properties classpath for core.jar to java1.4
 
 TAG: lib_java_dbsgen-1-0-2
 DATE: 01/16/2004
