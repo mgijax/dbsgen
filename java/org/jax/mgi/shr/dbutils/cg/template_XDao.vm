@@ -159,7 +159,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
       {
         BCPExceptionFactory ef = new BCPExceptionFactory();
         BCPException e2 = (BCPException)
-          ef.getException(BCPExceptionFactory.RecordStampErr);
+          ef.getException(BCPExceptionFactory.RecordStampErr, e);
         e2.bind("${Table.name}");
         throw e2;
       }
@@ -208,7 +208,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
       {
         DBExceptionFactory ef = new DBExceptionFactory();
         DBException e2 = (DBException)
-          ef.getException(DBExceptionFactory.RecordStampErr);
+          ef.getException(DBExceptionFactory.RecordStampErr, e);
         e2.bind("${Table.name}");
         throw e2;
       }
@@ -267,7 +267,7 @@ public class ${Table.name}DAO extends DAO implements Cloneable
       {
         DBExceptionFactory ef = new DBExceptionFactory();
         DBException e2 = (DBException)
-          ef.getException(DBExceptionFactory.RecordStampErr);
+          ef.getException(DBExceptionFactory.RecordStampErr, e);
         e2.bind("${Table.name}");
         throw e2;
       }
