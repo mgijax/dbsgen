@@ -13,12 +13,6 @@ import org.jax.mgi.shr.dbutils.Table;
 import org.jax.mgi.shr.log.Logger;
 import org.jax.mgi.shr.log.ConsoleLogger;
 
-/**
- * @author mbw
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 public class DBCodeGenerator 
 {
 
@@ -60,6 +54,12 @@ public class DBCodeGenerator
         String baseDir = pkgToDirName(this.basePkg);
         generateFile(new DBTablesCG(this.schema, this.basePkg), 
             baseDir + File.separator + this.schema + ".java"); 
+            
+        /**
+         * generate the tables extended definition class
+         */
+        generateFile(new DBTablesExtendedCG(this.schema, this.basePkg), 
+            baseDir + File.separator + this.schema + "Ext.java");
             
         /**
          * generate the db constants classes if constants list is found
