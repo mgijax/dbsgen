@@ -6,7 +6,6 @@
  */
 package org.jax.mgi.shr.dbutils.cg;
 
-import java.util.Vector;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,11 +13,7 @@ import java.io.FileReader;
 import java.io.File;
 import java.io.BufferedReader;
 
-import org.jax.mgi.shr.dbutils.SQLDataManager;
-import org.jax.mgi.shr.dbutils.RowReference;
 import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
-import org.jax.mgi.shr.dbutils.ResultsNavigator;
-import org.jax.mgi.shr.dbutils.DBException;
 import org.jax.mgi.shr.dbutils.Table;
 import org.jax.mgi.shr.log.Logger;
 import org.jax.mgi.shr.log.ConsoleLogger;
