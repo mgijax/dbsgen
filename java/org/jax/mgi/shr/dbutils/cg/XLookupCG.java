@@ -17,6 +17,7 @@ public class XLookupCG
   }
 
   public String generateCode() throws Exception {
-    return super.generateCode("org/jax/mgi/shr/dbutils/cg/template_XLookup.vm");
+    return super.generateCode(
+        "org/jax/mgi/shr/dbutils/cg/template_XLookup.vm");
   }
 }

@@ -17,6 +17,7 @@ public class XInterpreterCG
   }
 
   public String generateCode() throws Exception {
-    return super.generateCode("org/jax/mgi/shr/dbutils/cg/template_XInterpreter.vm");
+    return super.generateCode(
+        "org/jax/mgi/shr/dbutils/cg/template_XInterpreter.vm");
   }
 }

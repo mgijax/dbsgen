@@ -15,12 +15,18 @@ public class XDaoCG
     context.put("schema", schema);
     context.put("packageName", pkg);
     context.put("char", new Integer(DBTypeConstants.DB_CHAR));
-		context.put("varchar", new Integer(DBTypeConstants.DB_VARCHAR));
-		context.put("text", new Integer(DBTypeConstants.DB_TEXT));
-    context.put("bit", new Integer(DBTypeConstants.DB_BIT));
-		context.put("float", new Integer(DBTypeConstants.DB_FLOAT));
-		context.put("date", new Integer(DBTypeConstants.DB_DATETIME));
-		context.put("integer", new Integer(DBTypeConstants.DB_INTEGER));
+    context.put("varchar",
+                new Integer(DBTypeConstants.DB_VARCHAR));
+    context.put("text",
+                new Integer(DBTypeConstants.DB_TEXT));
+    context.put("bit",
+                new Integer(DBTypeConstants.DB_BIT));
+    context.put("float",
+                new Integer(DBTypeConstants.DB_FLOAT));
+    context.put("date",
+                new Integer(DBTypeConstants.DB_DATETIME));
+    context.put("integer",
+                new Integer(DBTypeConstants.DB_INTEGER));
     setContext(context);
   }
 

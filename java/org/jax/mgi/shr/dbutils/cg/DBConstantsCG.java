@@ -12,8 +12,8 @@ public class DBConstantsCG
     extends VelocityGenerator
     implements CodeGeneratable {
 
-  public DBConstantsCG(String pkgName, String className, String tableName, 
-                       String nameCol, String valueCol) 
+  public DBConstantsCG(String pkgName, String className, String tableName,
+                       String nameCol, String valueCol)
   throws Exception {
     context = new VelocityContext();
     context.put("className", className);
@@ -37,8 +37,9 @@ public class DBConstantsCG
   }
 
   public String generateCode() throws Exception {
-    return super.generateCode("org/jax/mgi/shr/dbutils/cg/template_DBConstants.vm");
+    return super.generateCode(
+        "org/jax/mgi/shr/dbutils/cg/template_DBConstants.vm");
   }
-  
+
 
 }

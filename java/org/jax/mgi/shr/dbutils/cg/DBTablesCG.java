@@ -15,7 +15,7 @@ public class DBTablesCG
     extends VelocityGenerator
     implements CodeGeneratable {
 
-  public DBTablesCG(String schema, String pkgName) 
+  public DBTablesCG(String schema, String pkgName)
   throws Exception {
     context = new VelocityContext();
     context.put("schema", schema);
@@ -28,7 +28,8 @@ public class DBTablesCG
     while (nav.next())
     {
         Table table = (Table) nav.getCurrent();
-        System.out.println("processing definitions for ... " + table.getName());
+        System.out.println("processing definitions for ... " +
+                           table.getName());
         // dont add system tables from Sybase
         if (!table.getName().startsWith("sys"))
             tableObjs.add(table);
@@ -39,21 +40,22 @@ public class DBTablesCG
   }
 
   public String generateCode() throws Exception {
-    return super.generateCode("org/jax/mgi/shr/dbutils/cg/template_TableDefs.vm");
+    return super.generateCode(
+        "org/jax/mgi/shr/dbutils/cg/template_TableDefs.vm");
   }
-  
+
   public class KeyConstDef
   {
       protected String name = null;
       protected Integer keyValue = null;
-      
+
       public KeyConstDef(String name, Integer keyValue)
       {
           this.name = name;
           this.keyValue = keyValue;
       }
-      
-      
-      
+
+
+
   }
 }

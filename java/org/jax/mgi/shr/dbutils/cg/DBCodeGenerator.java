@@ -13,20 +13,20 @@ import org.jax.mgi.shr.dbutils.Table;
 import org.jax.mgi.shr.log.Logger;
 import org.jax.mgi.shr.log.ConsoleLogger;
 
-public class DBCodeGenerator 
+public class DBCodeGenerator
 {
 
     protected String schema = null;
     /**
-     * the package name to be the root package 
+     * the package name to be the root package
      */
     protected String basePkg = null;
     /**
-     * the package name to contain the dao classes 
+     * the package name to contain the dao classes
      */
     protected String daoPkg = null;
     /**
-     * the package name to contain the db constant classes 
+     * the package name to contain the db constant classes
      */
     protected String constPkg = null;
     /**
@@ -47,23 +47,23 @@ public class DBCodeGenerator
 
     public void run() throws Exception
     {
-        
+
         /**
          * generate the tables definition class
          */
         String baseDir = pkgToDirName(this.basePkg);
-        generateFile(new DBTablesCG(this.schema, this.basePkg), 
-            baseDir + File.separator + this.schema + ".java"); 
-            
+        generateFile(new DBTablesCG(this.schema, this.basePkg),
+            baseDir + File.separator + this.schema + ".java");
+
         /**
          * generate the tables extended definition class
          */
-        generateFile(new DBTablesExtendedCG(this.schema, this.basePkg), 
+        generateFile(new DBTablesExtendedCG(this.schema, this.basePkg),
             baseDir + File.separator + this.schema + "Ext.java");
-            
+
         /**
          * generate the db constants classes if constants list is found
-         */      
+         */
         String constDir = pkgToDirName(this.constPkg);
         String constList = constDir + "constants.txt";
         if ((new File(constList).exists()))
@@ -92,14 +92,15 @@ public class DBCodeGenerator
                 tableName = fields[1];
                 colName = fields[2];
                 colValue = fields[3];
-                System.out.println("creating constant class for ... " + className);
+                System.out.println("creating constant class for ... " +
+                                   className);
                 generateFile(
-                    new DBConstantsCG(constPkg, className, tableName, 
+                    new DBConstantsCG(constPkg, className, tableName,
                     colName, colValue), constDir + className + ".java");
             }
         }
         /**
-         * generateFile the DAO classes if tables list is found 
+         * generateFile the DAO classes if tables list is found
          */
         String daoDir = pkgToDirName(this.daoPkg);
         String tableList = daoDir + "generatedTables.txt";
@@ -119,7 +120,7 @@ public class DBCodeGenerator
             String str = null;
             while ((str = daoIn.readLine()) != null)
             {
-                Table table = Table.getInstance(str, 
+                Table table = Table.getInstance(str,
                     SQLDataManagerFactory.getShared(this.schema));
                 System.out.println(
                     "processing DAO classes for ... " + table.getName());
@@ -143,15 +144,16 @@ public class DBCodeGenerator
             daoIn.close();
         }
     }
-    
-    protected void generateFile(CodeGeneratable cg, String filename) throws Exception {
+
+    protected void generateFile(CodeGeneratable cg, String filename)
+        throws Exception {
       String source = cg.generateCode();
       File daoClass = new File(filename);
       createFile(filename, source);
     }
-    
-    protected void createFile(String filename, String contents) throws
-        IOException {
+
+    protected void createFile(String filename, String contents)
+        throws IOException {
       File file = new File(filename);
       file.getParentFile().mkdirs();
       BufferedWriter writer = null;

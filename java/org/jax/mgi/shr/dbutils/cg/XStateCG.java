@@ -17,7 +17,8 @@ public class XStateCG
   }
 
   public String generateCode() throws Exception {
-    return super.generateCode("org/jax/mgi/shr/dbutils/cg/template_XState.vm");
+    return super.generateCode(
+        "org/jax/mgi/shr/dbutils/cg/template_XState.vm");
   }
 }
 
