@@ -1,3 +1,10 @@
+TAG: dbsgen-1-0-6
+DATE: 02/04/2004
+STAFF: mbw
+RELEASE: dev
+CHANGES: renamed build.properties to build.properties.default
+
+
 TAG: dbsgen-1-0-5
 TAG: dbsgen-1-0-4
 DATE: 02/02/2004
