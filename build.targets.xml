@@ -7,6 +7,6 @@
     </copy>
   </target>
 
-  <target name="buildall" description="Runs the targets 'compile', 'javadocs', 'install.templates' and 'jar'"
-          depends="compile, javadocs, install.templates, jar">
+  <target name="buildall" description="Runs the targets 'clean', 'compile', 'javadocs', 'install.templates' and 'jar'"
+          depends="clean, compile, javadocs, install.templates, jar">
   </target>
