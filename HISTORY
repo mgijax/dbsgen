@@ -1,3 +1,8 @@
+TAG: dbsgen-1-0-9
+DATE: 06/06/2004
+STAFF: mbw
+RELEASE: removed the prefixing of column names with table names in the XInterpreters when accessing row data
+
 TAG: dbsgen-1-0-8
 DATE: 03/22/2004
 STAFF: mbw
