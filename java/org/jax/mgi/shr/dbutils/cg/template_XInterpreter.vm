@@ -42,34 +42,34 @@ public class ${Table.name}Interpreter implements RowDataInterpreter
 ## if the table has an sequential key column
 ## then define a key object using the first column
 #if ($velocityCount == 1 && $Table.hasIncrementalKey())
-      ${Table.name}Key key = new ${Table.name}Key(row.getInt("${Table.name}.${column.name}"));
+      ${Table.name}Key key = new ${Table.name}Key(row.getInt("${column.name}"));
 
       ${Table.name}State state = new ${Table.name}State();
 #elseif ($velocityCount == 1 && !$Table.hasIncrementalKey())
       ${Table.name}State state = new ${Table.name}State();
 
 #if (${column.javaType} == "Integer")
-      state.${column.SetterCGName}(row.getInt("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getInt("${column.name}"));
 #elseif (${column.javaType} == "Float")
-      state.${column.SetterCGName}(row.getFloat("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getFloat("${column.name}"));
 #elseif (${column.javaType} == "Boolean")
-      state.${column.SetterCGName}(row.getBoolean("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getBoolean("${column.name}"));
 #elseif (${column.javaType} == "String")
-      state.${column.SetterCGName}(row.getString("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getString("${column.name}"));
 #elseif (${column.javaType} == "Timestamp")
-      state.${column.SetterCGName}(row.getTimestamp("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getTimestamp("${column.name}"));
 #end ##if javaTypes
 #elseif ($velocityCount != 1)
 #if (${column.javaType} == "Integer")
-      state.${column.SetterCGName}(row.getInt("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getInt("${column.name}"));
 #elseif (${column.javaType} == "Float")
-      state.${column.SetterCGName}(row.getFloat("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getFloat("${column.name}"));
 #elseif (${column.javaType} == "Boolean")
-      state.${column.SetterCGName}(row.getBoolean("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getBoolean("${column.name}"));
 #elseif (${column.javaType} == "String")
-      state.${column.SetterCGName}(row.getString("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getString("${column.name}"));
 #elseif (${column.javaType} == "Timestamp")
-      state.${column.SetterCGName}(row.getTimestamp("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getTimestamp("${column.name}"));
 #end ##if javaTypes
 #end ##if velocityCount != 1
 #end ##foreach column
@@ -107,27 +107,27 @@ public class ${Table.name}Interpreter implements RowDataInterpreter
       ${Table.name}State state = dao.getState();
 
 #if (${column.javaType} == "Integer")
-      state.${column.SetterCGName}(row.getInt("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getInt("${column.name}"));
 #elseif (${column.javaType} == "Float")
-      state.${column.SetterCGName}(row.getFloat("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getFloat("${column.name}"));
 #elseif (${column.javaType} == "Boolean")
-      state.${column.SetterCGName}(row.getBoolean("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getBoolean("${column.name}"));
 #elseif (${column.javaType} == "String")
-      state.${column.SetterCGName}(row.getString("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getString("${column.name}"));
 #elseif (${column.javaType} == "Timestamp")
-      state.${column.SetterCGName}(row.getTimestamp("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getTimestamp("${column.name}"));
 #end ##if javaTypes
 #elseif ($velocityCount != 1)
 #if (${column.javaType} == "Integer")
-      state.${column.SetterCGName}(row.getInt("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getInt("${column.name}"));
 #elseif (${column.javaType} == "Float")
-      state.${column.SetterCGName}(row.getFloat("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getFloat("${column.name}"));
 #elseif (${column.javaType} == "Boolean")
-      state.${column.SetterCGName}(row.getBoolean("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getBoolean("${column.name}"));
 #elseif (${column.javaType} == "String")
-      state.${column.SetterCGName}(row.getString("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getString("${column.name}"));
 #elseif (${column.javaType} == "Timestamp")
-      state.${column.SetterCGName}(row.getTimestamp("${Table.name}.${column.name}"));
+      state.${column.SetterCGName}(row.getTimestamp("${column.name}"));
 #end ##if javaTypes
 #end ##if velocityCount != 1
 #end ##foreach column
