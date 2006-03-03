@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<project name="build.targets" basedir=".">
   <target name="install.templates" description="Puts template files in classes directory"
           depends="compile">
     <copy todir="${classes.dir}/org/jax/mgi/shr/dbutils/cg">
@@ -10,3 +12,4 @@
   <target name="buildall" description="Runs the targets 'clean', 'compile', 'javadocs', 'install.templates' and 'jar'"
           depends="clean, compile, javadocs, install.templates, jar">
   </target>
+</project>
