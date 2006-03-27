@@ -1,7 +1,13 @@
+TAG: dbsgen-tr7203-1
+DATE: 03/27/2006
+STAFF: sc
+RELEASE: MGI3.44
+CHANGES: added  SNPGen.java
+
 TAG: dbsgen-tr7203-BP
 DATE: 02/27/2006
 STAFF: sc
-CHANGES: MGI3.44 Branc Point tag
+CHANGES: MGI3.44 Branch Point tag
 
 TAG: dbsgen-3-1-0-1
 DATE: 12/17/2004
