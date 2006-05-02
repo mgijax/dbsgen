@@ -1,8 +1,24 @@
+TAG: dbsgen-3-5-0-1
+DATE: 5/2/2006
+STAFF: dbm
+CHANGES:
+1) Merge configuration changes from tr6549 branch
+
 TAG: dbsgen-3-4-4-1
 DATE: 03/27/2006
 STAFF: sc
 RELEASE: MGI3.44
 CHANGES: Merge tr7203 branch to trunk
+
+TAG: dbsgen-tr6594-2
+DATE: 3/27/2006
+STAFF: dbm
+CHANGES: Consolidate build scripts
+
+TAG: dbsgen-tr6594-1
+DATE: 3/7/2006
+STAFF: dbm
+CHANGES: Initial tag for testing installation
 
 TAG: dbsgen-tr6594-BP
 DATE: 3/2/2006

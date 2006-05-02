@@ -1,28 +1,31 @@
 <?xml version="1.0"?>
-<!DOCTYPE definitions [
-  <!ENTITY build.targets SYSTEM "/usr/local/mgi/etc/build.lib.targets.xml">
-  <!ENTITY local.build.targets SYSTEM "build.targets.xml">
-]>
+<!-- This XML script is used to build the dbsgen product.
+-->
+<project name="dbsgen" default="compile" basedir=".">
 
-<!-- Enter the name of your current project here 
- -->
-<project name="lib_java_dbsgen" default="compile" basedir=".">
-
-  <!-- Enter the name of your jar file here minus the dot jar suffix
+   <!-- Get the system environment variables and define any other system
+        properties needed by the build.
    -->
-  <property name="jar.name" value="dbsgen"/>
+   <property environment="env"/>
+   <property name="jar.name" value="dbsgen"/>
+   <property name="classpath" value="${env.MGI_JAVALIB}/core.jar:${env.JAVALIB}/velocity-dep-1.3.1.jar:${env.JAVALIB}/junit.jar"/>
 
-  <!-- To override property definitions in the following 
-       properties file, add new definitions in preceding lines.
-       The first definition of a property takes precedence 
+   <!-- Import the universal targets.
    -->
-  <property file="build.properties"/>
-  <property file="/usr/local/mgi/etc/build.lib.properties"/>
+   <import file="${env.MGICONFIG}/etc/build.lib.targets.xml"/>
 
-  <!-- Universal targets get included here  
+   <!-- Define product specific targets.
    -->
-  &build.targets;
-  &local.build.targets;
+   <target name="install.templates" description="Puts template files in classes directory"
+           depends="compile">
+      <copy todir="${classes.dir}/org/jax/mgi/shr/dbutils/cg">
+         <fileset dir="${src.dir}/org/jax/mgi/shr/dbutils/cg">
+            <include name="**/*.vm"/>
+         </fileset>
+      </copy>
+   </target>
 
+   <target name="buildall" description="Runs the targets 'clean', 'compile', 'javadocs', 'install.templates' and 'jar'"
+           depends="clean, compile, javadocs, install.templates, jar">
+   </target>
 </project>
-
