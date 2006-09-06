@@ -3,7 +3,7 @@ package org.jax.mgi.shr.dbutils.cg;
 public class SNPGen {
 
   public static void main(String[] args) throws Exception {
-    DBCodeGenerator gen = new DBCodeGenerator("SNP", "org.jax.mgi.dbs.snp");
+    DBCodeGenerator gen = new DBCodeGenerator("SNPBE", "org.jax.mgi.dbs.snp");
     gen.run();
   }
 }
