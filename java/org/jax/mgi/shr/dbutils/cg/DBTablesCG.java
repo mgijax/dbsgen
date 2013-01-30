@@ -28,11 +28,14 @@ public class DBTablesCG
     while (nav.next())
     {
         Table table = (Table) nav.getCurrent();
-        System.out.println("processing definitions for ... " +
-                           table.getName());
-        // dont add system tables from Sybase
-        if (!table.getName().startsWith("sys"))
-            tableObjs.add(table);
+	if(table!=null)
+	{
+	    System.out.println("processing definitions for ... " +
+			       table.getName());
+	    // dont add system tables from Sybase
+	    if (!table.getName().startsWith("sys"))
+		tableObjs.add(table);
+	}
     }
 
     context.put("tableObjs", tableObjs);
