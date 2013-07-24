@@ -1,3 +1,9 @@
+TAG: dbsgen-5-1-4-1
+DATE: 7/24/2013
+STAFF: dbm
+CHANGES:
+1) build.xml: Use VELOCITY and JUNIT common settings
+
 TAG: dbsgen-3-5-1-1
 DATE: 09/06/2006
 STAFF: sc
