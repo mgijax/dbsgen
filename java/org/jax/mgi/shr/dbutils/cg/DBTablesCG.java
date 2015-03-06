@@ -18,11 +18,13 @@ public class DBTablesCG
   public DBTablesCG(String schema, String pkgName)
   throws Exception {
     context = new VelocityContext();
+    System.out.println("schema = " + schema);
     context.put("schema", schema);
     context.put("packageName", pkgName);
     Vector tableObjs = new Vector();
 
     SQLDataManager sqlMgr = SQLDataManagerFactory.getShared(schema);
+
     //if (false) {
     ResultsNavigator nav = sqlMgr.getTables();
     while (nav.next())
@@ -33,7 +35,7 @@ public class DBTablesCG
 	    System.out.println("processing definitions for ... " +
 			       table.getName());
 	    // dont add system tables from Sybase
-	    if (!table.getName().startsWith("sys"))
+	    if (!table.getName().startsWith("sys") && !table.getName().startsWith("pg_"))
 		tableObjs.add(table);
 	}
     }

@@ -23,6 +23,7 @@ public class DBTablesExtendedCG
     Vector tableObjs = new Vector();
 
     SQLDataManager sqlMgr = SQLDataManagerFactory.getShared(schema);
+
     //if (false) {
     ResultsNavigator nav = sqlMgr.getTables();
     while (nav.next())
