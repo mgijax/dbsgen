@@ -1,3 +1,10 @@
+TAG: dbsgen-5-1-4-2
+DATE: 3/10/2015
+STAFF: lnh
+CHANGES:
+TR11944 - retire IMSR
+1) Removed dbsgen/java/org/jax/mgi/shr/dbutils/cg/IMSRGen.java script
+
 TAG: dbsgen-5-1-4-1
 DATE: 7/24/2013
 STAFF: dbm
