@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.BufferedReader;
 
 import org.jax.mgi.shr.dbutils.SQLDataManagerFactory;
+import org.jax.mgi.shr.dbutils.SQLDataManager;
 import org.jax.mgi.shr.dbutils.Table;
 import org.jax.mgi.shr.log.Logger;
 import org.jax.mgi.shr.log.ConsoleLogger;
@@ -130,8 +131,9 @@ public class DBCodeGenerator
             String str = null;
             while ((str = daoIn.readLine()) != null)
             {
-                Table table = Table.getInstance(str,
-                    SQLDataManagerFactory.getShared(this.schema));
+		SQLDataManager sqlMgr = SQLDataManagerFactory.getShared(this.schema);
+
+                Table table = Table.getInstance(str, sqlMgr);
                 System.out.println(
                     "processing DAO classes for ... " + table.getName());
                 generateFile(
