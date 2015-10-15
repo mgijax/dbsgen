@@ -1,3 +1,8 @@
+TAG: dbsgen-6-0-1-1
+DATE: 10/15/15
+STAFF: sc
+CHANGES: UPdate SNPGen.java to use SNP instead of SNPBE (no longer exists)
+
 TAG: dbsgen-6-0-0-1
 DATE: 7/23/15
 STAFF: pf
