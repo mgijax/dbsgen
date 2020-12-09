@@ -25,7 +25,7 @@
       </copy>
    </target>
 
-   <target name="buildall" description="Runs the targets 'clean', 'compile', 'javadocs', 'install.templates' and 'jar'"
-           depends="clean, compile, javadocs, install.templates, jar">
+   <target name="buildall" description="Runs the targets 'clean', 'compile', 'install.templates' and 'jar'"
+           depends="clean, compile, install.templates, jar">
    </target>
 </project>
